@@ -8,7 +8,7 @@ export default class LoginService {
   constructor(private userModel = new UserModel()) { }
 
   login = async (user: ILogin) => {
-    const userResponse = await this.userModel.findOne(user);
+    const userResponse = await this.userModel.findOne(user.email);
     if (!userResponse) return { code: 401, message: 'Incorrect email or password' };
     const passwordHash = BcryptService.compare(userResponse.password, user.password);
     if (!passwordHash) {
@@ -17,6 +17,8 @@ export default class LoginService {
     const token = createToken(user.email);
     return { code: 200, data: token };
   };
+
+  findUser = async (email: string) => this.userModel.findOne(email);
 
   // public async login(user: ILogin) {
   //   const foundUser = await this.userModel.findOne(user);
