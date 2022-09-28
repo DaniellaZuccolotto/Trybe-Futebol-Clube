@@ -6,7 +6,7 @@ export interface ILogin {
 export interface IUser extends ILogin {
   role: string,
   username: string,
-  id:number
+  id?:number
 }
 
 // export interface ICreateUser extends IUser {
