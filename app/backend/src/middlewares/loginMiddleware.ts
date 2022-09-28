@@ -5,10 +5,10 @@ export default (req: Request, _res: Response, next: NextFunction) => {
   const { email, password } = req.body as ILogin;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || !(email.match(emailRegex))) {
-    return next({ code: 400, message: '"email" is required' });
+    return next({ code: 400, message: 'All fields must be filled' });
   }
   if (!password || password.length <= 6) {
-    return next({ code: 400, message: '"password" is required' });
+    return next({ code: 400, message: 'All fields must be filled' });
   }
   next();
 };

@@ -9,10 +9,10 @@ export default class LoginService {
 
   login = async (user: ILogin) => {
     const userResponse = await this.userModel.findOne(user);
-    if (!userResponse) return { code: 401, message: 'User not found' };
+    if (!userResponse) return { code: 401, message: 'Incorrect email or password' };
     const passwordHash = BcryptService.compare(userResponse.password, user.password);
     if (!passwordHash) {
-      return { code: 401, message: 'Password invalid' };
+      return { code: 401, message: 'Incorrect email or password' };
     }
     const token = createToken(user.email);
     return { code: 200, data: token };

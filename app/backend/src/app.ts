@@ -12,7 +12,8 @@ class App {
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
-    this.app.use('/login', LoginRouter)
+    this.app.use('/login', LoginRouter);
+    this.app.use(error);
   }
 
   private config():void {
@@ -25,14 +26,12 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
-    this.app.use(error)
   }
 
   public start(PORT: string | number):void {
     this.app.listen(PORT, () => console.log(`Running on port ${PORT}`));
   }
 }
-
 
 export { App };
 

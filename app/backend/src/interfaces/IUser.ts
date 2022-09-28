@@ -9,6 +9,6 @@ export interface IUser extends ILogin {
   id:number
 }
 
-export interface ICreateUser extends IUser {
-  id: number,
-}
+// export interface ICreateUser extends IUser {
+//   id: number,
+// }
