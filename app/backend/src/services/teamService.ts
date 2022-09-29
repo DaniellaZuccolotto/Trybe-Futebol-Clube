@@ -6,7 +6,7 @@ export default class LoginService {
   getAll = async () => {
     const userResponse = await this.teamModel.findAll();
     if (!userResponse) {
-      return { code: 401, message: 'Username or password invalid' };
+      return { code: 401, message: 'Teams Not Found' };
     }
     return { code: 200, data: userResponse };
   };
@@ -14,7 +14,7 @@ export default class LoginService {
   getById = async (id: number) => {
     const userResponse = await this.teamModel.getById(id);
     if (!userResponse) {
-      return { code: 401, message: 'Username or password invalid' };
+      return { code: 401, message: 'Team Not Found' };
     }
     return { code: 200, data: userResponse };
   };

@@ -1,10 +1,10 @@
 import { IUser } from '../interfaces/IUser';
 import UserModel from '../database/models/UserModel';
 
-abstract class SequelizeModelUser {
+class SequelizeModelUser {
   protected _model = UserModel;
 
-  // public async create(creationAtributes: ILogin): Promise<UserModel> {
+  // public async create(creationAtributes: string): Promise<UserModel> {
   //   return this._model.create(creationAtributes);
   // }
 
