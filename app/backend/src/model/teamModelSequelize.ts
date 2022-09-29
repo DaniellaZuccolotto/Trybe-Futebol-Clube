@@ -12,6 +12,9 @@ class TeamModelSequelize {
 
   getById = async (id: number): Promise<ITeam | null> => this._model
     .findByPk(id);
+
+  // findByName = async (name: number): Promise<ITeam | null> => this._model
+  //   .findOne({ where: { name } });
 }
 
 export default TeamModelSequelize;

@@ -26,8 +26,18 @@ class MatchesModelSequelize {
       { model: TeamModel, as: 'teamAway' }],
   });
 
-  update = async (id: string) => {
+  finish = async (id: string) => {
     const result = await this._model.update({ inProgress: false }, { where: { id } });
+    return result;
+  };
+
+  update = async (id: string, body: IMatches) => {
+    const { homeTeamGoals, awayTeamGoals } = body;
+    const newGame = {
+      homeTeamGoals,
+      awayTeamGoals,
+    };
+    const result = await this._model.update(newGame, { where: { id } });
     return result;
   };
 

@@ -28,9 +28,18 @@ export default class MatchesController {
     return res.status(code).json(data);
   };
 
+  finish = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const { code, data, message } = await this.matchesService.finish(id);
+    if (message) {
+      return next({ code, message });
+    }
+    return res.status(code).json(data);
+  };
+
   update = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    const { code, data, message } = await this.matchesService.update(id);
+    const { code, data, message } = await this.matchesService.update(id, req.body);
     if (message) {
       return next({ code, message });
     }

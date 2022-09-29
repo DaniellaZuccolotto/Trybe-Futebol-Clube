@@ -24,10 +24,10 @@ export default async (req: NewRequest, _res: Response, next: NextFunction) => {
     const validateToken: IToken = verify(token, JWT_SECRET) as IToken;
     const service = new LoginService();
     const userResponse = await service.findUser(validateToken.email);
-    if (!userResponse) return next({ code: 401, message: 'Invalid token' });
+    if (!userResponse) return next({ code: 401, message: 'Token must be a valid token' });
     req.userRole = userResponse.role;
     next();
   } catch (err) {
-    next({ code: 401, message: 'Invalid token' });
+    next({ code: 401, message: 'Token must be a valid token' });
   }
 };
