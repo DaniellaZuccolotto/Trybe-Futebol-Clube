@@ -1,13 +1,24 @@
 // import IMatches from '../interfaces/IMatches';
+import IMatches from '../interfaces/IMatches';
 import MatcheModel from '../database/models/MatcheModel';
 import TeamModel from '../database/models/TeamModel';
 
 class MatchesModelSequelize {
   protected _model = MatcheModel;
 
-  // public async create(creationAtributes: ILogin): Promise<UserModel> {
-  //   return this._model.create(creationAtributes);
-  // }
+  create = async (body: IMatches) => {
+    const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = body;
+    const newGame = {
+      homeTeam,
+      homeTeamGoals,
+      awayTeam,
+      awayTeamGoals,
+      inProgress: true,
+    };
+    const result = await this._model.create(newGame);
+    const { id } = result;
+    return { id, ...newGame };
+  };
 
   findAll = async (): Promise<MatcheModel[] | null> => this._model.findAll({
     include: [

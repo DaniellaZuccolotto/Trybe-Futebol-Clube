@@ -20,6 +20,14 @@ export default class MatchesController {
     return res.status(code).json(data);
   };
 
+  create = async (req: Request, res: Response, next: NextFunction) => {
+    const { code, data, message } = await this.matchesService.create(req.body);
+    if (message) {
+      return next({ code, message });
+    }
+    return res.status(code).json(data);
+  };
+
   // getById = async (req: Request, res: Response, next: NextFunction) => {
   //   const { id } = req.params;
   //   const { code, data, message } = await this.teamService.getById(Number(id));

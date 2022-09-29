@@ -1,3 +1,4 @@
+import IMatches from '../interfaces/IMatches';
 import MatchesModel from '../model/matchesModelSequelize';
 
 export default class MatchesService {
@@ -9,6 +10,14 @@ export default class MatchesService {
       return { code: 401, message: 'Matches Not Found' };
     }
     return { code: 200, data: userResponse };
+  };
+
+  create = async (body: IMatches) => {
+    const userResponse = await this.matchesModel.create(body);
+    if (!userResponse) {
+      return { code: 401, message: 'Matches Not Found' };
+    }
+    return { code: 201, data: userResponse };
   };
 
   // getById = async (id: number) => {
