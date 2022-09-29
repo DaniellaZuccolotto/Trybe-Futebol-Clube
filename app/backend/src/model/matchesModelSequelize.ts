@@ -26,6 +26,11 @@ class MatchesModelSequelize {
       { model: TeamModel, as: 'teamAway' }],
   });
 
+  update = async (id: string) => {
+    const result = await this._model.update({ inProgress: false }, { where: { id } });
+    return result;
+  };
+
   // getById = async (id: number): Promise<ITeam | null> => this._model
   //   .findByPk(id);
 }

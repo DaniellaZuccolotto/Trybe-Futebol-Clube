@@ -8,5 +8,6 @@ const matchesController = new MatchesController();
 
 router.get('/', matchesController.getAll);
 router.post('/', auth, matchesController.create);
+router.patch('/:id/finish', auth, matchesController.update);
 
 export default router;

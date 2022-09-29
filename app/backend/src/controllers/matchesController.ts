@@ -28,6 +28,15 @@ export default class MatchesController {
     return res.status(code).json(data);
   };
 
+  update = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const { code, data, message } = await this.matchesService.update(id);
+    if (message) {
+      return next({ code, message });
+    }
+    return res.status(code).json(data);
+  };
+
   // getById = async (req: Request, res: Response, next: NextFunction) => {
   //   const { id } = req.params;
   //   const { code, data, message } = await this.teamService.getById(Number(id));
