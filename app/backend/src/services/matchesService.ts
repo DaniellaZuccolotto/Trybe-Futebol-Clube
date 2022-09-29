@@ -14,6 +14,10 @@ export default class MatchesService {
   };
 
   create = async (body: IMatches) => {
+    const { homeTeam, awayTeam } = body;
+    if (homeTeam === awayTeam) {
+      return { code: 401, message: 'It is not possible to create a match with two equal teams' };
+    }
     const userResponse = await this.matchesModel.create(body);
     if (!userResponse) {
       return { code: 401, message: this.notFound };
