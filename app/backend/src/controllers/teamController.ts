@@ -20,6 +20,15 @@ export default class TeamController {
     return res.status(code).json(data);
   };
 
+  getById = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const { code, data, message } = await this.teamService.getById(Number(id));
+    if (message) {
+      return next({ code, message });
+    }
+    return res.status(code).json(data);
+  };
+
   // validate = async (req: Request, res: Response) => {
   //   const { userRole } = req as NewRequest;
   //   return res.status(200).json({ role: userRole });
