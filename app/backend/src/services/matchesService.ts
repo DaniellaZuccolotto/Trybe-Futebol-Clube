@@ -9,6 +9,7 @@ export default class MatchesService {
 
   getAll = async () => {
     const userResponse = await this.matchesModel.findAll();
+    console.log('test');
     if (!userResponse) {
       return { code: 401, message: this.notFound };
     }
