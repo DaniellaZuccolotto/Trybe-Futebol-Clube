@@ -7,20 +7,20 @@ export default class LeaderBoardService {
 
   goals = (matches: any) => {
     const goalsFavor = matches
-      .reduce((acc: any, { homeTeamGoals }: any): any => acc + homeTeamGoals, 0);
+      .reduce((acc: any, { awayTeamGoals }: any): any => acc + awayTeamGoals, 0);
     return goalsFavor;
   };
 
   goalsAgainst = (matches: any) => {
     const goalsAgainst = matches
-      .reduce((acc: any, { awayTeamGoals }: any): any => acc + awayTeamGoals, 0);
+      .reduce((acc: any, { homeTeamGoals }: any): any => acc + homeTeamGoals, 0);
     return goalsAgainst;
   };
 
   points = (matches: any) => {
     const points = matches
       .reduce((acc: any, { homeTeamGoals, awayTeamGoals }: any): any => {
-        if (homeTeamGoals > awayTeamGoals) return acc + 3;
+        if (homeTeamGoals < awayTeamGoals) return acc + 3;
         if (homeTeamGoals === awayTeamGoals) return acc + 1;
         return acc;
       }, 0);
@@ -30,7 +30,7 @@ export default class LeaderBoardService {
   victory = (matches: any) => {
     const victory = matches
       .reduce((acc: any, { homeTeamGoals, awayTeamGoals }: any): any => {
-        if (homeTeamGoals > awayTeamGoals) return acc + 1;
+        if (homeTeamGoals < awayTeamGoals) return acc + 1;
         return acc;
       }, 0);
     return victory;
@@ -48,26 +48,27 @@ export default class LeaderBoardService {
   defeat = (matches: any) => {
     const defeat = matches
       .reduce((acc: any, { homeTeamGoals, awayTeamGoals }: any): any => {
-        if (homeTeamGoals < awayTeamGoals) return acc + 1;
+        if (homeTeamGoals > awayTeamGoals) return acc + 1;
         return acc;
       }, 0);
     return defeat;
   };
 
   resultAll = (matches: any) => {
-    const result = matches.reduce((acc: any, { teamName, matchesHome }: any): any => {
+    const result = matches.reduce((acc: any, { teamName, matchesAway }: any): any => {
       const team = {
         name: teamName,
-        totalGames: matchesHome.length,
-        goalsFavor: this.goals(matchesHome),
-        goalsOwn: this.goalsAgainst(matchesHome),
-        goalsBalance: (this.goals(matchesHome) - this.goalsAgainst(matchesHome)),
-        totalPoints: this.points(matchesHome),
-        totalVictories: this.victory(matchesHome),
-        totalDraws: this.draw(matchesHome),
-        totalLosses: this.defeat(matchesHome),
-        efficiency: ((this.points(matchesHome) / (matchesHome.length * 3)) * 100).toFixed(2),
+        totalGames: matchesAway.length,
+        goalsFavor: this.goals(matchesAway),
+        goalsOwn: this.goalsAgainst(matchesAway),
+        goalsBalance: (this.goals(matchesAway) - this.goalsAgainst(matchesAway)),
+        totalPoints: this.points(matchesAway),
+        totalVictories: this.victory(matchesAway),
+        totalDraws: this.draw(matchesAway),
+        totalLosses: this.defeat(matchesAway),
+        efficiency: ((this.points(matchesAway) / (matchesAway.length * 3)) * 100).toFixed(2),
       };
+
       return [...acc, team];
     }, []);
     return result;
@@ -91,8 +92,8 @@ export default class LeaderBoardService {
     return result;
   };
 
-  getAll = async () => {
-    const userResponse = await this.leaderBoardModel.findAll();
+  getAllAway = async () => {
+    const userResponse = await this.leaderBoardModel.findAllAway();
     if (!userResponse) {
       return { code: 401, message: this.notFound };
     }
