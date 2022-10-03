@@ -6,6 +6,7 @@ import LeaderBoardController from '../controllers/leaderBoardController';
 const router = Router();
 const leaderController = new LeaderBoardController();
 
+router.get('/', leaderController.getLeaderBoard);
 router.get('/home', leaderController.getAll);
 router.get('/away', leaderController.getAllAway);
 

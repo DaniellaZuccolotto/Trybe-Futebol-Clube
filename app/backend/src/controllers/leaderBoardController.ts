@@ -1,19 +1,16 @@
 import { NextFunction, Request, Response } from 'express';
 import LeaderBoardService from '../services/leaderBoardService';
 import LeaderBoardAwayService from '../services/leaderBoardAwayService';
+import LeaderBoardAllService from '../services/leaderBoardAllService';
 
 // interface NewRequest extends Request {
 //   userRole?: string,
 // }
 
 export default class LeaderBoardController {
-  private leaderService: LeaderBoardService;
-  private leaderAwayService: LeaderBoardAwayService;
-
-  constructor() {
-    this.leaderService = new LeaderBoardService();
-    this.leaderAwayService = new LeaderBoardAwayService();
-  }
+  private leaderService = new LeaderBoardService();
+  private leaderAwayService = new LeaderBoardAwayService();
+  private leaderAllService = new LeaderBoardAllService();
 
   getAll = async (req: Request, res: Response, next: NextFunction) => {
     const { code, data, message } = await this.leaderService.getAll();
@@ -28,6 +25,11 @@ export default class LeaderBoardController {
     if (message) {
       return next({ code, message });
     }
+    return res.status(code).json(data);
+  };
+
+  getLeaderBoard = async (req: Request, res: Response) => {
+    const { code, data } = await this.leaderAllService.getLeaderBoard();
     return res.status(code).json(data);
   };
 }
